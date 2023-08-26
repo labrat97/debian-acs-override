@@ -1,5 +1,14 @@
 #!/bin/bash
-ACSO_PATCH="diff -ruN a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+
+sudo apt install build-essential libncurses5-dev fakeroot xz-utils libelf-dev liblz4-tool \
+  unzip flex bison bc debhelper rsync libssl-dev:native
+wget -N https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.47.tar.xz
+tar -xvf linux-6.1.47.tar.xz
+cd linux-6.1.47
+cp /boot/config-6.1.* .config
+
+patch -p1 << EOM
+diff -ruN a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -4190,6 +4190,15 @@
@@ -136,14 +145,5 @@ diff -ruN a/drivers/pci/quirks.c b/drivers/pci/quirks.c
 +	{ PCI_ANY_ID, PCI_ANY_ID, pcie_acs_overrides },
  	{ 0 }
  };
-"
-
-
-sudo apt install build-essential libncurses5-dev fakeroot xz-utils libelf-dev liblz4-tool \
-  unzip flex bison bc debhelper rsync libssl-dev:native
-wget -N https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.47.tar.xz
-tar -xvf linux-6.1.47.tar.xz
-cd linux-6.1.47
-cp /boot/config-6.1.* .config
-echo $ACSO_PATCH | patch -p1
+EOM
 LOCALVERSION=-acso KDEB_PKGVERSION=$(make kernelversion)-1 make deb-pkg
