@@ -3,7 +3,11 @@
 wget -N https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.47.tar.xz
 tar -xvf linux-6.1.47.tar.xz
 cd linux-6.1.47
-cp /boot/config-6.1.* .config
+
+for conf in /boot/config-6.1.*; do
+cp $conf .config
+break
+done
 
 patch -p1 << EOM
 diff -ruN a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
