@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt install build-essential libncurses5-dev fakeroot xz-utils libelf-dev liblz4-tool \
-  unzip flex bison bc debhelper rsync libssl-dev:native
 wget -N https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.47.tar.xz
 tar -xvf linux-6.1.47.tar.xz
 cd linux-6.1.47
@@ -146,4 +144,5 @@ diff -ruN a/drivers/pci/quirks.c b/drivers/pci/quirks.c
  	{ 0 }
  };
 EOM
+
 LOCALVERSION=-acso KDEB_PKGVERSION=$(make kernelversion)-1 make deb-pkg
