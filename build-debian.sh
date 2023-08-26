@@ -149,4 +149,4 @@ diff -ruN a/drivers/pci/quirks.c b/drivers/pci/quirks.c
  };
 EOM
 
-LOCALVERSION=-acso KDEB_PKGVERSION=$(make kernelversion)-1 make deb-pkg
+LOCALVERSION=-acso KDEB_PKGVERSION=$(make kernelversion)-1 make -j`nproc` deb-pkg
